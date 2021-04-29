@@ -6,6 +6,10 @@ Each example has a sequential implementation and also parallel versions using Pt
 
 * [Pi 2 - Calculates pi using integral](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/pi-integral).
 
+* [Vector Addition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/vec-add).
+
+* [LU Decomposition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/lu-decomp).
+
 ## How to compile
 
 To compile the programs, make sure you have a C compiler installed on your system (like gcc, icc, clang, etc). We are using the GNU (gcc) compiler, but you can use any other C compiler. In this case, just remember to edit the Makefile. You will also need an MPI implementation (like Open MPI, MPICH, Intel MPI, MVAPICH, etc) for the MPI versions. And NVCC for cuda programs.
