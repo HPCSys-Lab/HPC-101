@@ -1,12 +1,20 @@
-# PI
+# Pi
 
 This program calculates pi using an infinite series approach.
-From trigonometry, we know that:
 
-tan(pi / 4) = 1
+From trigonometry, we have:
 
-If we use the inverse tangent function, i.e. arctan(x), we have:
+`tan(pi / 4) = 1`
 
-arctan(1) = pi / 4
+Using the inverse tangent function, `arctan(x)`, we have:
 
-In order to calculate arctan(x), we have the following formula
+`arctan(1) = pi / 4`
+
+So, we can write:
+
+`pi = arctan(1) * 4`
+
+Now, we need to calculate `arctan(1)`. 
+
+Using a method known as the Gregory-Leibniz Series or the Madhava–Gregory series, we have the following formula to calculate `arctan(x)`.
+
