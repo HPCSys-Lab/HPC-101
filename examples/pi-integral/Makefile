@@ -9,9 +9,9 @@ pthread:
 	$(CC) pi_pth.c -o pi_pth -lpthread
 
 openmp:
-	# For Linux systems:
+	# For Linux systems
 	$(CC) pi_omp.c -o pi_omp -fopenmp
-	# For MacOS with clang clang:
+	# For MacOS with clang
 	# /usr/local/opt/llvm/bin/clang pi_omp.c -o pi_omp -fopenmp -L/usr/local/opt/llvm/lib
 
 clean:
