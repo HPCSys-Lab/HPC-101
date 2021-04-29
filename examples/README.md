@@ -39,6 +39,6 @@ Each version (sequential and parallel) generates an specific executable file aft
 
 * OpenMP: `OMP_NUM_THREADS=T ./prog_omp ARG1 .. ARG_N`, where `T` is the number of threads.
 
-* MPI: `mpirun -n P ./prog_omp ARG1 .. ARG_N`, where `P` is the number of processes.
+* MPI: `mpirun -n P ./prog_mpi ARG1 .. ARG_N`, where `P` is the number of processes.
 
-* Cuda: `./prog_omp ARG1 .. ARG_N`.
+* Cuda: `./prog_cuda ARG1 .. ARG_N`.
