@@ -1,0 +1,21 @@
+CC=gcc
+
+all: clean sequential pthread openmp
+
+sequential:
+	$(CC) pi_seq.c -o pi_seq -lm
+
+pthread:
+	$(CC) pi_pth.c -o pi_pth -lpthread -lm
+
+openmp:
+	# For Linux systems
+	$(CC) pi_omp.c -o pi_omp -fopenmp -lm
+	# For MacOS with clang
+	# /usr/local/opt/llvm/bin/clang pi_omp.c -o pi_omp -fopenmp -lm -L/usr/local/opt/llvm/lib
+
+cuda:
+	nvcc lu_cuda.cu -o lu_cuda
+
+clean:
+	rm -f pi_seq pi_pth pi_omp
