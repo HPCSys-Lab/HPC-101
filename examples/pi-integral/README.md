@@ -1,4 +1,4 @@
-# Pi - Using integral
+# Pi - Integral
 
 This program computes the integral of `4 / (1+x*x)` from 0 to 1.  
 The value of this integral is pi.
