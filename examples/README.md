@@ -10,6 +10,7 @@ Each example has a sequential implementation and also parallel versions using Pt
 
 To compile the programs, make sure you have a C compiler installed on your system (like gcc, icc, clang, etc). We are using the GNU (gcc) compiler, but you can use any other C compiler. In this case, just remember to edit the Makefile. You will also need an MPI implementation (like Open MPI, MPICH, Intel MPI, MVAPICH, etc) for the MPI versions. And NVCC for cuda programs.
 
+For an up to date view of OpenMP compilers and tools see [this](https://www.openmp.org/resources/openmp-compilers-tools/)
 
 Now you can compile the programs using:
 
