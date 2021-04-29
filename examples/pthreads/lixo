@@ -1,7 +1,0 @@
-total 8
--rw-r--r--  1 hermes  staff  61 19 Abr 12:09 README.md
-drwxr-xr-x  2 hermes  staff  64 19 Abr 12:10 cuda
--rw-r--r--  1 hermes  staff   0 19 Abr 12:10 lixo
-drwxr-xr-x  2 hermes  staff  64 19 Abr 12:09 mpi
-drwxr-xr-x  2 hermes  staff  64 19 Abr 12:09 openmp
-drwxr-xr-x  2 hermes  staff  64 19 Abr 12:09 pthreads
