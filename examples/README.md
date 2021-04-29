@@ -11,7 +11,7 @@ Each example has a sequential implementation and also parallel versions using Pt
 To compile the programs, make sure you have a C compiler installed on your system (like gcc, icc, clang, etc).
 We are using the GNU (gcc) compiler, but you can use any other C compiler. In this case, just remember to edit the Makefile.
 
-Now you can, compile the programs using:
+Now you can compile the programs using:
 
 `make`
 
