@@ -18,6 +18,6 @@ Now, we need to calculate `arctan(1)`.
 
 Using a method known as the Gregory-Leibniz Series or the Madhava–Gregory series, we have the following formula to calculate `arctan(x)`:
 
-![alt text](https://github.com/HPCSys-Lab/HPC-101/blob/main/img/pi_arctan.png)
+![picture](https://github.com/HPCSys-Lab/HPC-101/blob/main/img/pi_arctan.png)
 
 Where `n` is the number of terms of the series (or number of iterations) and `x = 1`.
