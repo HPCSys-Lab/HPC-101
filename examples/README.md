@@ -8,6 +8,8 @@ Each example has a sequential implementation and also parallel versions using Pt
 
 * [Vector addition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/vec-add).
 
+* [Matrix-Matrix Multiplication](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/mm-mul).
+
 * [LU decomposition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/lu-decomp).
 
 * [Laplace solver using Jacobi iteration](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/laplace).
