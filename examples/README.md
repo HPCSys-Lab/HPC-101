@@ -6,9 +6,11 @@ Each example has a sequential implementation and also parallel versions using Pt
 
 * [Pi 2 - Calculates pi using integral](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/pi-integral).
 
-* [Vector Addition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/vec-add).
+* [Vector addition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/vec-add).
 
-* [LU Decomposition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/lu-decomp).
+* [LU decomposition](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/lu-decomp).
+
+* [Laplace solver using Jacobi iteration](https://github.com/HPCSys-Lab/HPC-101/tree/main/examples/laplace).
 
 ## How to compile
 
