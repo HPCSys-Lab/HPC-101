@@ -28,8 +28,8 @@ double *t_sum;
 // encapsulate the thread args
 struct thread_data{
     int id; //thread id
-    int begin; //begin iterator of the thread's chunck
-    int end; //end iterator of the thread's chunck
+    int begin; //begin iterator of the thread's chunk
+    int end; //end iterator of the thread's chunk
 };
 
 // array to store the input data (args) of each thread
@@ -64,15 +64,15 @@ int main(int argc, char *argv[]) {
     thread_data_array = (struct thread_data *) malloc(num_threads * sizeof(struct thread_data));
 
     // calculate the chunck size
-    int chunck_size = num_terms / num_threads;
+    int chunk = num_terms / num_threads;
 
     // create the threads
     for(int i = 0; i < num_threads; i++){
 
         // set the thread args
         thread_data_array[i].id = i;
-        thread_data_array[i].begin = i * chunck_size;
-        thread_data_array[i].end = thread_data_array[i].begin + chunck_size;
+        thread_data_array[i].begin = i * chunk;
+        thread_data_array[i].end = thread_data_array[i].begin + chunk;
 
         // the last thread might have more work
         // if num_terms % num_threads != 0

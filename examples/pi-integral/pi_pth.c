@@ -90,12 +90,12 @@ void *compute_sum(void *args){
     // thread id
     int id = *(int *) args;
 
-    // calculate the chunck size
-    int chunck_size = num_steps / num_threads;
+    // calculate the chunk size
+    int chunk = num_steps / num_threads;
 
     // calcute begin and end step of the thread
-    int begin = id * chunck_size;
-    int end = begin + chunck_size;
+    int begin = id * chunk;
+    int end = begin + chunk;
 
     // the last thread might have more work
     // if num_steps % num_threads != 0

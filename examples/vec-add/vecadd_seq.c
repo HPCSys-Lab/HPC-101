@@ -62,5 +62,10 @@ int main(int argc, char *argv[]) {
 
     printf("vectors added with %d errors in %lf seconds\n", err, exec_time);
 
+    free(a);
+    free(b);
+    free(c);
+    free(res);
+    
     return 0;
 }
