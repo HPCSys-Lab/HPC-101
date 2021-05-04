@@ -6,3 +6,5 @@ After that, you submit your job using the `sbatch` command:
 
 `sbatch job.sh`
 
+Make sure your application is running on a singularity container.
+
