@@ -21,7 +21,7 @@ where:
 
 After that, you can run the container with:
 
-`singularity run container.sif /usr/bin/mmul_seq`
+`singularity run container.sif mmul_seq`
 
 and you should see:
 
