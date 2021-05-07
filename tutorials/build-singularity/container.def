@@ -10,7 +10,7 @@ From: ufscar/ubuntu_mpich:latest
 %post
     echo "Compiling programs..."
     cd /opt && make
-    cp mmul_seq mmul_pth mmul_omp /usr/bin/    
+    cp mmul_seq mmul_pth mmul_omp /usr/bin/
 
-%runscript    
+%runscript
     exec $@
