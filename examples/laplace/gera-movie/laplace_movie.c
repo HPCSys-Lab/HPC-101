@@ -6,7 +6,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define ITER_MAX 3000 // number of maximum iterations
+#define ITER_MAX 50000 // number of maximum iterations
 #define CONV_THRESHOLD 1.0e-5f // threshold of convergence
 
 // matrix to be solved
@@ -57,16 +57,17 @@ void initialize_grid(){
                 grid[i][j] = 100;
             else
                grid[i][j] = 0;
+            //grid[i][j] = rand() % 100;
             new_grid[i][j] = 0.0;
         }
     }
 }
 
 // save the grid in a file
-void save_grid(){
+void save_grid(int iteration){
 
     char file_name[30];
-    sprintf(file_name, "grid_laplace.txt");
+    sprintf(file_name, "saidas/grid-%d.txt",iteration);
 
     // save the result
     FILE *file;
@@ -105,6 +106,8 @@ int main(int argc, char *argv[]){
     double err = 1.0;
     int iter = 0;
 
+    system("mkdir -p saidas");
+
     printf("Jacobi relaxation calculation: %d x %d grid\n", size, size);
 
     // get the start time
@@ -135,11 +138,17 @@ int main(int argc, char *argv[]){
             }
         }
 
-        if(iter % 100 == 0)
+        if(iter % 1000 == 0)
             printf("Error of %0.10lf at iteration %d\n", err, iter);
+
+        if(iter % 500 == 0)
+            //save the final grid in file
+            save_grid(iter);
 
         iter++;
     }
+
+
 
     // get the end time
     gettimeofday(&time_end, NULL);
@@ -147,8 +156,7 @@ int main(int argc, char *argv[]){
     double exec_time = (double) (time_end.tv_sec - time_start.tv_sec) +
                        (double) (time_end.tv_usec - time_start.tv_usec) / 1000000.0;
 
-    //save the final grid in file
-    save_grid();
+
 
     printf("\nKernel executed in %lf seconds with %d iterations and error of %0.10lf\n", exec_time, iter, err);
 
