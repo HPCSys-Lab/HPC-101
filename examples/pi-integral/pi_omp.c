@@ -50,8 +50,7 @@ int main(int argc, char *argv[]) {
 
     double exec_time = (double) (time_end.tv_sec - time_start.tv_sec) +
                        (double) (time_end.tv_usec - time_start.tv_usec) / 1000000.0;
-
-    printf("pi with %d steps is %.9lf in %lf seconds\n", num_steps, pi, exec_time);
+    printf("pi with %d steps is %.9lf in %lf seconds in %d procs\n", num_steps, pi, exec_time,omp_get_max_threads());
 
     return 0;
 }

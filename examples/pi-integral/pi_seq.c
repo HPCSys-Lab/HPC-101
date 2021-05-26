@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
     for(int i = 1; i <= num_steps; i++){
         x = (i - 0.5) * step;
         sum += 4.0 / (1.0 + x * x);
+        printf("  i=%d   x=%6.2f sum=%6.2f  \n",i,x,sum);
     }
 
     double pi = step * sum;
