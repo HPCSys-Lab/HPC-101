@@ -8,7 +8,7 @@
 #include <sys/time.h>
 
 // save the marix in a file
-void save_matrix(int **matrix, int size){
+void save_matrix(double **matrix, int size){
 
     char file_name[30];
     sprintf(file_name, "result_matrix.txt");
@@ -19,7 +19,7 @@ void save_matrix(int **matrix, int size){
 
     for(int i = 0; i < size; i++){
         for(int j = 0; j < size; j++){
-            fprintf(file, "%d ", matrix[i][j]);
+            fprintf(file, "%5.2f ", matrix[i][j]);
         }
         fprintf(file, "\n");
     }
@@ -42,14 +42,14 @@ int main(int argc, char *argv[]) {
     int size = atoi(argv[1]);
 
     // alloc memory for the matrices
-    int **a = (int **) malloc(size * sizeof(int *));
-    int **b = (int **) malloc(size * sizeof(int *));
-    int **c = (int **) malloc(size * sizeof(int *));
+    double **a = (double **) malloc(size * sizeof(double *));
+    double **b = (double **) malloc(size * sizeof(double *));
+    double **c = (double **) malloc(size * sizeof(double *));
 
     for(int i = 0; i < size; i++){
-        a[i] = (int *) malloc(size * sizeof(int));
-        b[i] = (int *) malloc(size * sizeof(int));
-        c[i] = (int *) malloc(size * sizeof(int));
+        a[i] = (double *) malloc(size * sizeof(double));
+        b[i] = (double *) malloc(size * sizeof(double));
+        c[i] = (double *) malloc(size * sizeof(double));
     }
 
     // initialize the matrices
@@ -74,7 +74,14 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-
+  /*  for (int k=0; k<size; k++)
+       for (int i=0; i<size; i++)
+       {
+          c[i][k] = 0.0;
+          for (int j=0; j<size; j++)
+             c[i][k] = c[i][k] + a[i][j] * b[j][k];
+       }
+*/
     // get the end time
     gettimeofday(&time_end, NULL);
 
