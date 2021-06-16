@@ -107,8 +107,6 @@ int main(int argc, char* argv[]) {
     printf("Computing wavefield ... \n");
 
     float *swap;
-    float value = 0.0;
-    
 
     float dxSquared = DX * DX;
     float dySquared = DY * DY;
