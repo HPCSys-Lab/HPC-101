@@ -1,0 +1,24 @@
+1*) Compile Sequential and Parallel Code : "make"
+
+2*) For parallel version, see parameters of a single run into 'param' file; default convergence 'cnv_tol' is
+    equal to 1.0e-1
+
+3*) Shell script 'generate_outputs_heat2d' for generating multiple output files :
+
+    Parameters that can be modified are :
+                                         1) 'n' : number of output files
+                                         2) 'start_cnv_parameter' with notation : 1.0*10^-1, not 1.0e-1
+                                         3) 'end_cnv_parameter' with notation : 1.0*10^-6, not 1.0e-6
+                                         4) 'nbproc' : number of processes (see 'param' file)
+
+4*) Matlab script 'generate_gif_heat2d.m' for making an animated gif of heat numerical solution, works with
+    'generate_outputs_heat2d' script
+
+5*) In 'generate_gif_heat2d.m' : set 'numFrames' parameter to number of output files for plotting
+
+6*) Shell script 'run_benchmark_heat2d' for performing a benchmark on speedup
+
+7*) Matlab script 'plot_benchmark_heat2d.m' for plotting benchmark on speedup
+
+8*) Into 'explicitSeq.c' and 'explicitPar.c', If you change the 'temp1_init' and 'temp2_init' values,
+    modify the '%15.11f' default format as a function of the new values format

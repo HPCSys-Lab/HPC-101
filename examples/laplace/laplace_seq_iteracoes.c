@@ -124,6 +124,7 @@ int main(int argc, char *argv[]){
 
                 new_grid[i][j] = 0.25 * (grid[i][j+1] + grid[i][j-1] +
                                          grid[i-1][j] + grid[i+1][j]);
+
             }
         }
 

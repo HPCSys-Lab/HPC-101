@@ -1,0 +1,122 @@
+#!/bin/bash
+
+# Number of processes
+declare -a nbproc=(2 4 8 16 32 64 128 256)
+# Number of subdomains
+declare -a sizex=(2 2 4 4 8 8 16 16)
+declare -a sizey=(1 2 2 4 4 8 8 16)
+# Size of grid
+declare -a size=(512 1024 2048)
+# Iteration index
+declare -i i=0
+declare -i j=0
+declare -i k
+# Number of runs for each case
+declare -i run=2
+# Max steps
+declare -i maxstep=100000000
+# Scale for bc
+declare -i scale_bc=10
+# Format for printf
+declare -i fmt=4
+# Time step
+dt=1.0e-1
+# Convergence value
+convergence=1.0e-1
+# Mpirun options
+mpirun_options="-oversubscribe"
+# Delete previous 'benchmark_heat2d.txt' file
+rm -f benchmark_heat2d.txt
+# Save original 'param' file
+cp -f param param.save
+
+# Main loop for batch execution
+while [ "${size[$i]}" != "" ]
+do
+  # Sequential performance
+  if [ $j -eq 0 ]
+  then
+    # Output parameters
+    echo "Sequential version :"
+    echo "Size of grid = ${size[$i]}"
+    # Initialize time sums
+    sum_time_final=0
+    sum_time_final_square=0
+    # Loop on runs
+    for ((k=1;k<=run;k++))
+    do
+      # Echo current iteration
+      echo -ne "Run $k"'\r'
+      output=$(echo -e "${size[$i]}\n${size[$i]}\n$maxstep\n$dt\n$convergence\n" \
+               | ./explicitSeq | grep -v criterion)
+      # Current time
+      current_time=$(echo $output | awk '{print $35}')
+      # Sum of current times
+      sum_time_final=$(echo "scale=$scale_bc; $sum_time_final+$current_time" | bc)
+      # Sum of squared current times
+      sum_time_final_square=$(echo "scale=$scale_bc; $sum_time_final_square+($current_time*$current_time)" | bc)
+    done
+    # Compute mean sequential runtime
+    mean_time=$(echo "scale=$scale_bc; $sum_time_final/$run" | bc)
+    # Compute standard deviation
+    error_time=$(echo "scale=$scale_bc; sqrt(($sum_time_final_square)/$run-($mean_time*$mean_time))" | bc)
+    echo $(printf "%d %d %.${fmt}f %.${fmt}f" ${size[$i]} 1 $mean_time $error_time) >> benchmark_heat2d.txt
+    # Output runtime
+    echo -e "\nMean Runtime = $(printf "%.${fmt}f" $mean_time) - Standard deviation = $(printf "%.${fmt}f\n" $error_time)"
+  fi
+  # Change current size into 'param' file
+  sed -e "2s/.*/${size[$i]}/" param > tmpfile && mv -f tmpfile param
+  sed -e "4s/.*/${size[$i]}/" param > tmpfile && mv -f tmpfile param
+  # Loop on number of processes
+  while [ "${nbproc[$j]}" != "" ]
+  do
+    # Change current subdomains
+    sed -e "6s/.*/${sizex[$j]}/" param > tmpfile && mv -f tmpfile param
+    sed -e "8s/.*/${sizey[$j]}/" param > tmpfile && mv -f tmpfile param
+    # Set max step
+    sed -e "10s/.*/${maxstep}/" param > tmpfile && mv -f tmpfile param
+    # Set time step
+    sed -e "12s/.*/${dt}/" param > tmpfile && mv -f tmpfile param
+    # Set convergence
+    sed -e "14s/.*/${convergence}/" param > tmpfile && mv -f tmpfile param
+    # Output parameters
+    echo "Parallel version :"
+    echo "Size of grid = ${size[$i]}"
+    echo "Subdomains of x = ${sizex[$j]} - Subdomains of y = ${sizey[$j]}"
+    echo "Number of processes = ${nbproc[$j]}"
+    # Initialize time sums
+    sum_time_final=0
+    sum_time_final_square=0
+    # Loop on runs
+    for ((k=1;k<=run;k++))
+    do
+      # Echo current iteration
+      echo -ne "Run $k"'\r'
+      # Parallel performance
+      output=$(mpirun $mpirun_options -np ${nbproc[$j]} ./explicitPar | grep -v criterion)
+      # Current time
+      current_time=$(echo $output | awk '{print $18}')
+      # Sum of current times
+      sum_time_final=$(echo "scale=$scale_bc; $sum_time_final+$current_time" | bc)
+      sum_time_final_square=$(echo "scale=$scale_bc; $sum_time_final_square+($current_time*$current_time)" | bc)
+    done
+    # Compute mean parallel runtime
+    mean_time=$(echo "scale=$scale_bc; $sum_time_final/$run" | bc)
+    # Compute standard deviation
+    error_time=$(echo "scale=$scale_bc; sqrt(($sum_time_final_square)/$run-($mean_time*$mean_time))" | bc)
+    echo $(printf "%d %d %.${fmt}f %.${fmt}f" ${size[$i]} ${nbproc[$j]} $mean_time $error_time) >> benchmark_heat2d.txt
+    # Output runtime
+    #echo -e "\nMean Runtime = $mean_time - Standard deviation = $error_time\n"
+    echo -e "\nMean Runtime = $(printf "%.${fmt}f" $mean_time) - Standard deviation = $(printf "%.${fmt}f\n" $error_time)"
+    # Increment nbproc index
+    j=$j+1
+  done
+# Blank line for separating blocks
+echo " " >> benchmark_heat2d.txt
+# Reset nbproc index
+j=0
+# Increment size index
+i=$i+1
+done
+# Restore original 'param' file
+mv -f param.save param

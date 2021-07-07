@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Number of processes - Adapt with 'param' file
+declare -i nbproc=32
+# Number of output files
+declare -i n=200
+# Index of output file
+declare -i i
+# Start convergence value
+declare start_cnv_parameter=0.5*10^1
+declare start_cnv=$(printf '%.10f\n' $(echo "scale=10; $start_cnv_parameter" | bc))
+# End convergence value
+declare end_cnv_parameter=1.0*10^-4
+declare end_cnv=$(printf '%.10f\n' $(echo "scale=10; $end_cnv_parameter" | bc))
+# Convergence step value
+declare step_cnv=$(printf '%.10f\n' $(echo "scale=10;(($start_cnv)-($end_cnv))/($n-1)" | bc))
+# Mpirun options
+mpirun_options="-oversubscribe"
+
+# Save original 'param' file
+cp -f param param.save
+
+# Main loop for batch execution
+for ((i=1;i<=$n;i++)); do
+   # Compute current convergence
+   cnv=$(printf '%.10f\n' $(echo "scale=10;(($start_cnv)-($i-1)*($step_cnv))" | bc))
+   echo 'Current Run Number : '$i
+   echo 'Total Number of Runs : '$n
+   echo 'Current Convergence = '$cnv
+   echo 'Start Convergence = '$start_cnv
+   echo 'End Convergence = '$end_cnv
+   echo 'Step Convergence = '$step_cnv
+   # Set current convergence into 'param' file
+   sed -e "14s/.*/$cnv/" param > tmpfile && mv -f tmpfile param
+   # Execution of parallel version
+   mpirun $mpirun_options -np $nbproc ./explicitPar | sed "s/outputPar\.dat/outputPar$i\.dat/g"
+   # Save output data
+   mv outputPar.dat outputPar$i.dat
+done
+# Restore original 'param' file
+mv -f param.save param
