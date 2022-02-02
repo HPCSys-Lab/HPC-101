@@ -22,4 +22,7 @@ mv result_matrix.txt mm_omp.txt
 
 diff mm_seq.txt mm_pth.txt
 diff mm_seq.txt mm_omp.txt
- 
+
+# OBS: if it is an MPI job
+# use --mpi=pmi2
+# srun --mpi=pmi2 singularity run container.sif mmul_seq 1000
