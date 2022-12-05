@@ -1,15 +1,26 @@
 #!/bin/bash
 
-echo 'deb http://download.opensuse.org/repositories/home:/afsmaira:/ufscar-hpc/xUbuntu_20.04/ /' \
-| sudo tee /etc/apt/sources.list.d/home:afsmaira:ufscar-hpc.list
+sudo apt-get update
 
-curl -fsSL \
-https://download.opensuse.org/repositories/home:afsmaira:ufscar-hpc/xUbuntu_20.04/Release.key \
-| gpg --dearmor \
-| sudo tee /etc/apt/trusted.gpg.d/home:afsmaira:ufscar-hpc.gpg > /dev/null
+sudo apt-get install -y build-essential libssl-dev uuid-dev libgpgme11-dev \
+    squashfs-tools libseccomp-dev wget pkg-config git cryptsetup debootstrap
 
-sudo apt update -y
+wget https://dl.google.com/go/go1.13.linux-amd64.tar.gz
 
-sudo apt install singularity-container -y
+sudo tar --directory=/usr/local -xzvf go1.13.linux-amd64.tar.gz
 
-singularity version
+export PATH=/usr/local/go/bin:$PATH
+
+wget https://github.com/singularityware/singularity/releases/download/v3.5.3/singularity-3.5.3.tar.gz
+
+tar -xzvf singularity-3.5.3.tar.gz
+
+cd singularity
+
+./mconfig
+
+cd builddir
+
+make
+
+sudo make install
