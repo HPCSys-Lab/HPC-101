@@ -1,0 +1,19 @@
+Para 16/04/09: estudar os grupos de programa
+comp
+erro
+exit
+proc
+fork
+
+sinais
+wait
+limits
+prio
+sched
+syscall
+
+pipe
+ipc-sysv
+
+------------
+pthreads

@@ -1,0 +1,9 @@
+
+
+ usar vfork() com exec -> done
+
+ vfork() nao copia entradas da tabela de paginas. 
+ E interessante quando vai fazer o exec em seguida.
+
+
+ testar o efeito de vfork quando o exec falha....

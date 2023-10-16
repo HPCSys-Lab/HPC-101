@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for i in `ipcs -s | grep $USER | cut -d' ' -f2 `; do ipcrm -s $i; done
+for i in `ipcs -m | grep $USER | cut -d' ' -f2 `; do ipcrm -m $i; done
+for i in `ipcs -q | grep $USER | cut -d' ' -f2 `; do ipcrm -q $i; done

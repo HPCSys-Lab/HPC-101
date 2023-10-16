@@ -1,0 +1,68 @@
+
+ Sistemas Operacionais 2
+--------------------------
+
+ Os programas nesse diretório procuram ilustrar aspectos da programação em 
+C fazendo acesso às chamadas de sistema.
+
+ comp/      exemplos de compilação
+
+ syscall/   uso de chamadas de sistema
+ erro/      tratamento de erros em chamadas de sistema
+
+ proc/      informações referentes a processos
+ fork/      criação de processos
+ exit/      término de programas e execução de rotina 
+ wait/      espera por alteração de estado em processos filhos
+
+ sinais/    tratamento de sinais
+
+ prio/      ajuste de prioridades de processos
+ sched/     ajustes de escalonamento de processos
+ sysctl/
+ limits/    exame de limites associados à criação de processos
+
+ time/
+ timer/
+
+ pipe/      pipes e fifos para comunicação entre processos
+ msgq/      filas de mensagem para comunicação entre procesos
+ sysv-sem/  comunicação e sincronização usando semáforos
+ sysv-shm/  comunicação entre processos usando memória compartilhada
+
+ ipc-sysv/  comunicação e sincronização entre processos com API SystemV
+ ipc-posix/ comunicação e sincronização entre processos com API Posix
+
+ io/
+ file/  entrada e saída de dados em arquivos
+
+ mem/       acesso à memória
+
+ socket-inet/ comunicação entre processos usando sockets (tcp/ip)
+
+ pthreads/  criação e gerenciamento de threads Posix
+ mpi/       programação distribuída com mpi 
+ omp/       programação paralela com openmp  
+
+ perform/   aspectos de otimização de código
+
+ aplic/     exemplos de aplicações paralelas
+
+
+ Como estudar?
+---------------
+
+ 1. Abrir programa com editor preferido (vi?)
+ 2. Abrir shell para uso do comando man. Ex.: man fork
+ 3. Estudar cada programa entendendo TODAS as chamadas e sua lógica (se houver:-)
+ 4. Abrir novo shell para compilar (*) e executar o programa, analisando os resultados
+
+(*) a) gcc -Wall prog.c -o prog
+    b) make prog
+    c) compila prog
+
+ Bons programas!
+
+ Hélio
+------------------------
+ Hélio Crestana Guardia

@@ -1,0 +1,5 @@
+
+pipe
+ipc-sysv
+posix-ipc
+pthreads

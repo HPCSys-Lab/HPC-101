@@ -1,0 +1,5 @@
+criar proc com sched fifo e examinar tempo de execucao
+
+copiar rr, gerando 2 processos com política SCHED_RR. 
+Os 2 devem se alternar no uso da CPU.
+Mudando política para SCHED_FIFO, cada 1 executa até terminar.

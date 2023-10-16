@@ -1,0 +1,47 @@
+ Vi
+----
+
+2 modos de operação: modo de comando (ativado com Esc) e modo de inserção
+
+Ativação da inserção:
+
+a: insere à direita do cursor
+A: insere no fim da linha
+i: insere à esquerda do cursor
+I: insere no começo da linha
+o: insere na linha de baixo
+O: insere na linha de cima
+
+Esc: retorna ao modo de comando
+
+Movimentação do cursor no modo de comando:
+
+h: movimenta à esquerda
+j: vai para a linha de baixo
+k: vai para a linha de cima
+l: movimenta à direita
+b: vai para o começo da palavra anterior
+e: vai para o fim da palavra atual
+setas (?)
+:n vai para linha n
+G	vai para o fim do arquivo
+
+Remoção:
+
+x: remove caracter sob o cursor
+[n]x: remove n caracteres à direita do cursor
+dd: remove a linha atual
+[n]dd: remove n linhas a partir da atual
+dw: remove uma palavra à direita do cursor
+[n]dw: remove n palavras à direita do cursor
+D: apaga até o fim da linha
+
+Para sair do vi:
+Esc
+:w salva com o nome atual
+:wq salva e sai
+:x salva e sai
+:q sai sem salvar (se não houve alterações)
+:q! sai sem salvar (mesmo se houve alterações)
+
+

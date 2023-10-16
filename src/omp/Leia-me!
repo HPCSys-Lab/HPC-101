@@ -1,0 +1,30 @@
+
+Definições para OpenMP com compilador Intel: icc
+-------------------------------------------------
+
+CC=/opt/intel/cc/10.0.025/bin/icc 
+CFLAGS=-openmp
+INC=-I /opt/intel/cc/10.0.025/include
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/intel/cc/10.0.025/lib
+export MANPATH=$MANPATH:/opt/intel/cc/10.0.025/man
+
+
+Definições para OpenMP com compilador GNU: gcc > 4.2
+-----------------------------------------------------
+
+CC=gcc 
+CFLAGS=-fopenmp -Wall
+INC=
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/gcc-4.2.1/lib
+export MANPATH=$MANPATH:/opt/gcc-4.2.1/man
+
+# man gcc / openmp
+-fopenmp
+	Enable handling of OpenMP directives "#pragma omp" in C/C++ and "!$omp" in Fortran.
+	When -fopenmp is specified, the compiler generates parallel code according to the OpenMP
+	Application Program Interface v2.5 <http://www.openmp.org/>.  This option implies
+	-pthread, and thus is only supported on targets that have support for -pthread.
+
+

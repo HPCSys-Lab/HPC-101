@@ -1,0 +1,4 @@
+On many platforms, including i386, socket calls are all multiplexed 
+(via glibc wrapper functions) through socketcall(2) and similarly 
+System V IPC calls are multiplexed through ipc(2).
+

@@ -1,0 +1,101 @@
+# Hélio: 22/05/2009
+
+Sobre o uso do mpi no cluster
+-------------------------------
+
+0. Hosts
+
+localhost (xeon), c0-0, c0-1, c0-2, c0-3, c0-4, c0-5, c0-6, c0-7, c0-8, c0-9, c0-10, c0-11, c0-12, c0-13, c0-14, c0-15
+
+1. mpich
+---------
+
+ Para compilar: ch-mpicc ....
+
+ ex: # ch-mpicc prog.c -o prog
+
+ Para executar: ch-mpirun ....
+
+ ex: # ch-mpirun -np 
+
+ Hostfile: /opt/mpich/share/machines.LINUX
+
+ xeon
+ c0-0:2
+ c0-1:2
+ ...
+ c0-15:2
+
+
+2. mpich2
+---------
+
+
+3. lammpi
+---------
+
+ Para compilar: lam-mpicc ....
+
+ ex: # lam-mpicc prog.c -o prog
+
+ Hostfile: /opt/lam/gnu/etc/lam-bhost.def
+ localhost
+ #
+ c0-0  cpu=2
+ c0-1  cpu=2
+ ...
+ c0-15  cpu=2
+
+ Para ativar os hosts servidores: lamboot
+ ex: # lamboot	
+
+ Para verificar os servidores ativos: lamnodes
+ ex: # lamnodes
+ 
+ Para executar: lam-mpirun ...
+
+ ex: # lam-mpirun -np 17 prog 
+
+
+4. openmpi
+-----------
+
+# Ajuste do PATH:
+export PATH=$PATH:/usr/lib/openmpi/1.2.7-gcc/bin/
+
+Para compilar: mpicc ...
+ ex: # lam-mpicc prog.c -o prog
+
+Para executar: mpirun ...
+ ex: # mpirun -np 16 aplic
+
+# This starts a four-process parallel application, running four copies of the executable named my_parallel_application.
+#
+# The rsh starter component accepts the --hostfile (also known as --machinefile) option to indicate which hosts to start the processes on:
+#
+
+ $ mpirun --hostfile my_hostfile -np 4 my_parallel_application
+
+# The hostfile my_hostfile is a text file with hosts specified, one per line. Each host can also specify a default a maximum number of slots to be used on that host (i.e., the number of available processors on that host). Comments are also supported. For example:
+#
+# This is an example hostfile.  Comments begin with #
+# The following node is a single processor machine:
+# foo.example.com
+# 
+# The following node is a dual-processor machine:
+# bar.example.com slots=2
+# 
+# The following node is a quad-processor machine, and we absolutely
+# want to disallow over-subscribing it:
+# yow.example.com slots=4 max-slots=4
+
+OBS:
+You can avoid that mpi try to use the infiniband network by including in your script:
+
+export OMPI_MCA_btl=self,sm,tcp
+
+Of course this should not be included if you want to use the infiniband network.
+
+5. intel mpi-rt
+---------------
+

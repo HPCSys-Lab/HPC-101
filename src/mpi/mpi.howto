@@ -1,0 +1,18 @@
+
+centos:
+
+yum install lam lam-devel
+	/usr/lib/lam
+yum install openmpi openmpi-devel
+	/usr/lib/openmpi
+
+mpi-selector:
+
+
+yum install -y librdmacm librdmacm-devel librdmacm-utils librdmacm-static
+mpi-selector --system --set openmpi-1.3.2-gcc-i386
+
+# Incluir em /etc/profile.d/mpi-selector.sh (ou qualquer outro script neste dir)
+# Ajuste do OpenMPI para nao usar Myrinet
+export OMPI_MCA_btl=self,sm,tcp
+

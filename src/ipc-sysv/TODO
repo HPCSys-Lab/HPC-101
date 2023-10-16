@@ -1,0 +1,5 @@
+
+nos semaforos, produtor / consumidor, usar semop com chamada aos 2 semaforos na mesma operacao: 
+
+- produtor: espaco, mutex
+- consumidor: item, mutex

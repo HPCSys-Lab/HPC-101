@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for dir in comp erro exit fork ipc-posix ipc-sysv limits mem mpi omp pipe prio proc pthreads sched sinais socket-inet syscall wait; do 
+	cd $dir
+	echo make clean @ $dir
+	make clean
+	cd ..
+done

@@ -1,0 +1,6 @@
+
+sigsetjmp / siglongjmp
+
+mudar política de escalonamento para tempo real e experimentar tratamento de sinais de tempo real...
+
+tratar o trap do shell

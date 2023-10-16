@@ -1,0 +1,94 @@
+
+
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+
+ int semget(key_t key, int nsems, int semflg);
+
+ int semop(int semid, struct sembuf *sops, unsigned nsops);
+
+ int semtimedop(int semid, struct sembuf *sops, unsigned nsops, struct timespec *timeout);
+
+ int semctl(int semid, int semnum, int cmd, ...);
+
+
+
+ semget - get a semaphore set identifier
+-----------------------------------------
+
+	int semget(key_t key, int nsems, int semflg);
+	    ------
+
+ semop, semtimedop - semaphore operations
+------------------------------------------
+
+	int semop(int semid, struct sembuf *sops, unsigned nsops);
+	    -----
+
+	int semtimedop(int semid, struct sembuf *sops, unsigned nsops, struct timespec *timeout);
+	    ----------
+
+	Each semaphore in a semaphore set has the following associated values:
+
+	unsigned short  semval;   /* semaphore value */
+	unsigned short  semzcnt;  /* # waiting for zero */
+	unsigned short  semncnt;  /* # waiting for increase */
+	pid_t           sempid;   /* process that did last op */
+
+	semop() performs operations on selected semaphores in the set indicated  by  semid.
+	Each  of  the nsops elements in the array pointed to by sops specifies an operation
+	to be performed on a single semaphore.  The elements of this structure are of  type
+	struct sembuf, containing the following members:
+
+	unsigned short sem_num;  /* semaphore number */
+	short          sem_op;   /* semaphore operation */
+	short          sem_flg;  /* operation flags */
+
+	Flags recognized in sem_flg are IPC_NOWAIT and SEM_UNDO.  
+	If an operation specifies SEM_UNDO, it will be automatically undone when the process terminates.
+
+
+ semctl - semaphore control operations
+----------------------------------------
+
+	int semctl(int semid, int semnum, int cmd, ...);
+	    ------
+
+	semctl() performs the control operation specified by cmd on the semaphore set iden-
+	tified by semid, or on the semnum-th semaphore of that set.  (The semaphores  in  a
+	set are numbered starting at 0.)
+
+	This  function has three or four arguments, depending on cmd.  When there are four,
+	the fourth has the type union semun. The calling program must define this union as follows:
+
+	union semun {
+		int              val;    /* Value for SETVAL */
+		struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
+		unsigned short  *array;  /* Array for GETALL, SETALL */
+		struct seminfo  *__buf;  /* Buffer for IPC_INFO (Linux specific) */
+	};
+
+	The semid_ds data structure is defined in <sys/sem.h> as follows:
+
+	struct semid_ds {
+		struct ipc_perm sem_perm;  /* Ownership and permissions
+		time_t          sem_otime; /* Last semop time */
+		time_t          sem_ctime; /* Last change time */
+		unsigned short  sem_nsems; /* No. of semaphores in set */
+	};
+
+	The ipc_perm structure is defined in <sys/ipc.h> as follows (the highlighted fields
+	are settable using IPC_SET):
+
+	struct ipc_perm {
+		key_t key;            /* Key supplied to semget() */
+		uid_t uid;            /* Effective UID of owner */
+		gid_t gid;            /* Effective GID of owner */
+		uid_t cuid;           /* Effective UID of creator */
+		gid_t cgid;           /* Effective GID of creator */
+		unsigned short mode;  /* Permissions */
+		unsigned short seq;   /* Sequence number */
+	};
+
+

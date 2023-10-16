@@ -1,0 +1,41 @@
+# Copyright (c) 2001-2003 The Trustees of Indiana University.  
+#                         All rights reserved.
+# Copyright (c) 1998-2001 University of Notre Dame. 
+#                         All rights reserved.
+# Copyright (c) 1994-1998 The Ohio State University.  
+#                         All rights reserved.
+# 
+# This file is part of the LAM/MPI software package.  For license
+# information, see the LICENSE file in the top level directory of the
+# LAM/MPI source distribution.
+# 
+# $HEADER$
+#
+#	Function:	- bhost.def
+#			- a single-node LAM
+#
+
+# pvfs2-compute-0-0  cpu=2
+# pvfs2-compute-0-1  cpu=2
+
+# <machine> [cpu=<cpucount>] [user=<userid>]
+# <machine> [cpu=<cpucount>] [user=<userid>]
+
+# xeon.local
+compute-0-0
+compute-0-1
+compute-0-2
+compute-0-3
+compute-0-4
+compute-0-5
+compute-0-6
+compute-0-7
+compute-0-8
+compute-0-9
+compute-0-10
+compute-0-11
+compute-0-12
+compute-0-13
+compute-0-14
+compute-0-15
+

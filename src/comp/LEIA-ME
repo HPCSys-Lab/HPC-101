@@ -1,0 +1,19 @@
+
+ ar - create, modify, and extract from archives
+-----
+ The  GNU ar program creates, modifies, and extracts from archives.  An archive is a sin-
+ gle file holding a collection of other files in a structure that makes  it  possible  to
+ retrieve the original individual files (called members of the archive).
+
+
+ nm - list symbols from object files
+-----
+ GNU nm lists the symbols from object files objfile....
+
+
+ objdump - display information from object files
+---------
+ objdump  displays  information about one or more object files.  The options control what
+ particular information to display.  This information is mostly useful to programmers who
+ are working on the compilation tools, as opposed to programmers who just want their pro-
+ gram to compile and work.

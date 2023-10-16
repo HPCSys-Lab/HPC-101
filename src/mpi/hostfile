@@ -1,0 +1,52 @@
+# mpirun --hostfile my_hostfile -np 4 my_parallel_application
+
+# The hostfile my_hostfile is a text file with hosts specified, one per line. Each host can also specify a default a maximum number of slots to be used on that host (i.e., the number of available processors on that host). Comments are also supported. For example:
+
+# This is an example hostfile.  Comments begin with #
+#
+# The following node is a single processor machine:
+# foo.example.com
+# The following node is a dual-processor machine:
+# bar.example.com slots=2
+# The following node is a quad-processor machine, and we absolutely
+# want to disallow over-subscribing it:
+# yow.example.com slots=4 max-slots=4
+
+# compute-0-0.local
+# compute-0-1.local
+# compute-0-2.local
+# compute-0-3.local
+# compute-0-4.local
+# compute-0-5.local
+# compute-0-6.local
+# compute-0-7.local
+# compute-0-8.local
+# compute-0-9.local
+# compute-0-10.local
+# compute-0-11.local
+# # compute-0-12.local
+# compute-0-13.local
+# compute-0-14.local
+# compute-0-15.local
+
+micro100.comp.ufscar.br
+micro101.comp.ufscar.br
+# micro102.comp.ufscar.br
+# micro103.comp.ufscar.br
+# micro104.comp.ufscar.br
+# micro105.comp.ufscar.br
+# micro106.comp.ufscar.br
+# micro107.comp.ufscar.br
+# micro108.comp.ufscar.br
+# micro109.comp.ufscar.br
+# micro110.comp.ufscar.br
+# micro111.comp.ufscar.br
+# micro112.comp.ufscar.br
+# micro113.comp.ufscar.br
+# micro114.comp.ufscar.br
+# micro115.comp.ufscar.br
+# micro116.comp.ufscar.br
+# micro117.comp.ufscar.br
+micro118.comp.ufscar.br
+micro119.comp.ufscar.br
+# micro120.comp.ufscar.br

@@ -1,0 +1,27 @@
+
+http://theory.uwinnipeg.ca/gnu/make/make_toc.html
+
+Variables Used by Implicit Rules
+
+The commands in built-in implicit rules make liberal use of certain predefined variables. You can alter these variables in the makefile, with arguments to make, or in the environment to alter how the implicit rules work without redefining the rules themselves.
+
+For example, the command used to compile a C source file actually says `$(CC) -c $(CFLAGS) $(CPPFLAGS)'. The default values of the variables used are `cc' and nothing, resulting in the command `cc -c'. By redefining `CC' to `ncc', you could cause `ncc' to be used for all C compilations performed by the implicit rule. By redefining `CFLAGS' to be `-g', you could pass the `-g' option to each compilation. All implicit rules that do C compilation use `$(CC)' to get the program name for the compiler and all include `$(CFLAGS)' among the arguments given to the compiler.
+
+
+Here is a table of variables used as names of programs in built-in rules:
+
+AR
+    Archive-maintaining program; default `ar'. 
+AS
+    Program for doing assembly; default `as'. 
+CC
+    Program for compiling C programs; default `cc'. 
+CXX
+    Program for compiling C++ programs; default `g++'. 
+CPP
+    Program for running the C preprocessor, with results to standard output; default `$(CC) -E'. 
+CFLAGS
+    Extra flags to give to the C compiler.
+CPPFLAGS
+    Extra flags to give to the C preprocessor and programs that use it (the C and Fortran compilers).
+...

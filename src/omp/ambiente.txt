@@ -1,0 +1,16 @@
+/*
+Standard OpenMP Environment Variables:
+
+OMP_SCHEDULE:Specifies the type of runtime scheduling. 
+	DEFAULT: static
+
+OMP_NUM_THREADS: Sets the number of threads to use during execution.
+	DEFAULT: Number of processors currently installed in the system while generating the executable
+
+OMP_DYNAMIC: Enables(TRUE) or disables (FALSE) the dynamic adjustment of the number of threads.
+	DEFAULT: FALSE
+
+OMP_NESTED: Enables (TRUE) or disables (FALSE) nested parallelism.
+	DEFAULT: FALSE
+*/
+

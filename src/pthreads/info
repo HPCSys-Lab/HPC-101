@@ -1,0 +1,49 @@
+
+POSIX.1 specifies a set of interfaces (functions, header files) for
+threaded programming commonly known as POSIX threads, or Pthreads. A
+single process can contain multiple threads, all of which are executing
+the same program. These threads share the same global memory (data and
+heap segments), but each thread has its own stack (automatic variables).
+
+POSIX.1 also requires that threads share a range of other attributes
+(i.e., these attributes are process-wide rather than per-thread):
+
+- process ID
+- parent process ID
+- process group ID and session ID
+- controlling terminal
+- user and group IDs
+- open file descriptors
+- record locks (see fcntl(2))
+- signal dispositions
+- file mode creation mask (umask(2))
+- current directory (chdir(2)) and root directory (chroot(2))
+- interval timers (setitimer(2)) and POSIX timers (timer_create())
+- nice value (setpriority(2))
+- resource limits (setrlimit(2))
+- measurements of the consumption of CPU time (times(2)) and resources
+
+
+/proc/[number]/task (since kernel 2.6.0-test6)
+
+	This is a directory that contains one subdirectory for each
+	thread in the process. The name of each subdirectory is the
+	numerical thread ID of the thread (see gettid(2)). Within each
+	of these subdirectories, there is a set of files with the same
+	names and contents as under the /proc/[number] directories. For
+	attributes that are shared by all threads, the contents for each
+	of the files under the task/[thread-ID] subdirectories will be
+	the same as in the corresponding file in the parent /proc/[num-
+	ber] directory (e.g., in a multithreaded process, all of the
+	task/[thread-ID]/cwd files will have the same value as the
+	/proc/[number]/cwd file in the parent directory, since all of the
+	threads in a process share a working directory). For attributes
+	that are distinct for each thread, the corresponding files under
+	task/[thread-ID] may have different values (e.g., various fields
+	in each of the task/[thread-ID]/status files may be different for
+	each thread).
+	
+	In a multithreaded process, the contents of the /proc/[num-
+	ber]/task directory are not available if the main thread has
+	already terminated (typically by calling pthread_exit(3)).
+

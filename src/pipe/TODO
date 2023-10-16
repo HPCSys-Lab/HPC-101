@@ -1,0 +1,8 @@
+ajustar pipe1: execucao do filho independente do pai. Testar broken pipe
+
+usar mensagem composta de tamanho + dados
+leitor lê primeiro tamanho, depois dados que seguem
+
+open O_NONBLOCKING
+
+pipe: fcntl NONBLOCK

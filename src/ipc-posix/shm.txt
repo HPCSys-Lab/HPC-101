@@ -1,0 +1,128 @@
+
+# /etc/fstab
+/dev/shm		/dev/shm		tmpfs		defaults		0 0
+
+# You can define the max size with size=256m (for 256MB) 
+# The default size is half your total system memory.
+
+# In addition to limiting size, we can also limit the number of inodes (filesystem objects) 
+# by specifying the nr_inodes=x parameter. 
+# When using nr_inodes, x can be a simple integer, and can also be followed with a k, m, or g 
+# to specify thousands, millions, or billions (!) of inodes.
+
+# You need to have kernel tmpfs support in order to use POSIX shared memory. 
+# System V shared memory will work without tmpfs in your kernel, however. 
+# Note that you do not need a tmpfs filesystem to be mounted for POSIX shared memory to work; 
+# you simply need the support in your kernel. 
+# POSIX shared memory isn't used too much right now, but this situation will likely change as time goes on.
+
+# While this may not seem like a positive, tmpfs data is not preserved between reboots, 
+# because virtual memory is volatile in nature. I guess you probably figured that tmpfs 
+# was called "tmpfs" for a reason, didn't you? However, this can actually be a good thing. 
+# It makes tmpfs an excellent filesystem for holding data that you don't need to keep, 
+# such as temporary files (those found in /tmp) and parts of the /var filesystem tree. 
+
+
+http://www.ussg.iu.edu/hypermail/linux/kernel/0112.2/0096.html
+
+> I don't know if /dev/shm (mounted with shmfs or the newer tmpfs)
+> is needed for proper SYSV IPC operation with newer (2.4.16 and newer)
+> kernel. Anyone can help?
+
+It is not needed. /dev/shm mounted with tmpfs is only needed for POSIX
+shared memory, which is still fairly rare. SysV IPC will work fine.
+
+> Moreover: I want to move my /tmp from disk to tmpfs for speed (I
+> make a lot of compiling, so I think it would help). Is this a good
+> idea? If so, what size can be appropriate for a small system that is
+> not permanently running?
+
+Some say it helps, others don't. Solaris has a similar feature, and it
+seems to work for them. However, Linux is light and our page-cache
+works well. Not so sure it is ideal.
+
+In other words, if you have memory to spare and the data ought to be
+cached, Linux probably will cache it anyhow. On the other hand, if you
+have lots of memory to spare, give it a try. Mount /tmp or all of /var
+in tmpfs.
+
+It is dynamic, so you don't need to specify a size. If you want to give
+a maximum size (probably a good idea), give one. Depends on what your
+tmp usages are and how much free memory you have.
+
+        Robert Love
+
+http://www-128.ibm.com/developerworks/library/l-fs3.html
+
+
+
+http://www.mail-archive.com/lfs-chat@linuxfromscratch.org/msg01254.html
+
+uzhmail wrote:
+
+    On Thursday 14 September 2006 19:59, Stef Bon wrote:
+    > Hello,
+    >
+    > I want to use a temporary filesystem, and I was wondering I could
+    > use /dev/shm. You could say, hey it's your system, so you can use it,
+    > but hey, what's the purpose of /dev/shm. Why is it there?
+    >
+    >
+    > Thanks in advance,
+    > Stef Bon
+
+
+
+    I think it is something like the Amiga RAM disk. It can be used to save files
+
+    etc, using memory instead of physical media.
+    Of course everything disappears on a reboot or halt --
+
+Well tmpfs is a type of filesystem which is pretty much as you describe.  In
+
+fact it's cool because it stays in memory when there's enough available other wise it gets written out to your swap partition. This makes it noticably faster
+
+than normal disk access.
+
+The temp filesystem (or RAM disk, if you like) is created at the moment you
+mount it and destroyed when you umount it.  You can define the max size
+with size=256m (for 256MB) as an arg to -o option on your mount command,
+or in the options field of /etc/fstab. The default size is half your total system
+memory.
+
+Well that's tmpfs.  There's a tmpfs mounted at /dev/shm, but don't use that!
+That's for POSIX shared memory support (which hardly any programs use,
+yet, so you can seriously reduce the size of that in your /etc/fstab).
+
+Tmpfs is very cool to mount on /tmp, then you get very fast temporary files
+since they mostly don't stay around long they never need to be written to
+disk.  You can actually mount a tmpfs on any directory you want and there
+are lot's of possible things you could do with it.  For example, you could
+put together a system where some heavily-accessed read-only files/
+programs are loaded from CD-ROM into a tmpfs at boot and accessed from
+there to have a lightening fast system (assuming you have lot's of RAM).
+
+Just remember, if your machine crashes, reboots, has a power failure, etc.
+
+even an accidental umount, and it's all gone without any undelete possibility.
+
+Don't save important data there, like the document you're working on for
+half a day....
+
+Brandon
+
+
+Speed
+
+The other major benefit of tmpfs is its blazing speed. Because a typical tmpfs filesystem will reside completely in RAM, reads and writes can be almost instantaneous. Even if some swap is used, performance is still excellent and those parts of the tmpfs filesystem will be moved to RAM as more free VM resources become available. Having the VM subsystem automatically move parts of the tmpfs filesystem to swap can actually be good for performance, since by doing so, the VM subsystem can free up RAM for processes that need it. This, along with its dynamic resizing abilities, allow for much better overall OS performance and flexibility than the alternative of using a traditional RAM disk.
+
+No persistence
+
+While this may not seem like a positive, tmpfs data is not preserved between reboots, because virtual memory is volatile in nature. I guess you probably figured that tmpfs was called "tmpfs" for a reason, didn't you? However, this can actually be a good thing. It makes tmpfs an excellent filesystem for holding data that you don't need to keep, such as temporary files (those found in /tmp) and parts of the /var filesystem tree. 
+
+Using tmpfs
+
+To use tmpfs, all you need is a 2.4 series kernel with "Virtual memory file system support (former shm fs)" enabled; this option lives under the "File systems" section of the kernel configuration options. Once you have a tmpfs-enabled kernel, you can go ahead and mount tmpfs filesystems. In fact, it's a good idea to enable tmpfs in all your 2.4 kernels, whether you plan to use tmpfs or not. This is because you need to have kernel tmpfs support in order to use POSIX shared memory. System V shared memory will work without tmpfs in your kernel, however. Note that you do not need a tmpfs filesystem to be mounted for POSIX shared memory to work; you simply need the support in your kernel. POSIX shared memory isn't used too much right now, but this situation will likely change as time goes on. 
+
+Also, if we want to limit the filesystem size to 512 KB or 1 GB, we can specify size=512k and size=1g, respectively. In addition to limiting size, we can also limit the number of inodes (filesystem objects) by specifying the nr_inodes=x parameter. When using nr_inodes, x can be a simple integer, and can also be followed with a k, m, or g to specify thousands, millions, or billions (!) of inodes.
+

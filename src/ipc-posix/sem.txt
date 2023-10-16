@@ -1,0 +1,82 @@
+
+
+#define _XOPEN_SOURCE 600
+
+#include <semaphore.h>
+
+sem_init, sem_wait, sem_trywait, sem_post, sem_getvalue, sem_destroy - operations on semaphores
+
+
+	int sem_init(sem_t *sem, int pshared, unsigned int value);
+
+	int sem_wait(sem_t * sem);
+
+	int sem_trywait(sem_t * sem);
+
+	int sem_post(sem_t * sem);
+
+	int sem_getvalue(sem_t * sem, int * sval);
+
+	int sem_destroy(sem_t * sem);
+
+DESCRIPTION
+       This manual page documents POSIX 1003.1b semaphores, not to  be  confused  with  SystemV
+       semaphores as described in !ipc!(5), !semctl!(2) and !semop!(2).
+
+       Semaphores  are  counters  for resources shared between threads. The basic operations on
+       semaphores are: increment the counter atomically, and wait until the counter is non-null
+       and decrement it atomically.
+
+       !sem_init!  initializes  the  semaphore object pointed to by |sem|. The count associated
+       with the semaphore is set initially to |value|. The |pshared| argument indicates whether
+       the  semaphore  is  local  to the current process (|pshared| is zero) or is to be shared
+       between several processes (|pshared| is not zero). LinuxThreads currently does not  sup-
+       port  process-shared  semaphores,  thus !sem_init! always returns with error !ENOSYS! if
+       |pshared| is not zero.
+
+       !sem_wait! suspends the calling thread until the semaphore pointed to by |sem| has  non-
+       zero count. It then atomically decreases the semaphore count.
+
+       !sem_trywait!  is  a  non-blocking variant of !sem_wait!. If the semaphore pointed to by
+       |sem| has non-zero count, the count is atomically decreased  and  !sem_trywait!  immedi-
+       ately returns 0.  If the semaphore count is zero, !sem_trywait! immediately returns with
+       error !EAGAIN!.
+
+       !sem_post! atomically increases the count of the semaphore pointed  to  by  |sem|.  This
+       function never blocks and can safely be used in asynchronous signal handlers.
+
+       !sem_getvalue! stores in the location pointed to by |sval| the current count of the sem-
+       aphore |sem|.
+
+
+
+       sem_wait - lock a semaphore
+
+       int sem_wait(sem_t *sem);
+       int sem_trywait(sem_t *sem);
+
+
+       int sem_timedwait(sem_t *sem, const struct timespec *abs_timeout);
+
+DESCRIPTION
+       sem_wait() decrements (locks) the semaphore pointed to by sem.  If the semaphore's value
+       is greater than zero, then the decrement proceeds, and  the  function  returns,  immedi-
+       ately.  If the semaphore currently has the value zero, then the call blocks until either
+       it becomes possible to perform the decrement (i.e.,  the  semaphore  value  rises  above
+       zero), or a signal handler interrupts the call.
+
+       sem_trywait()  is the same as sem_wait(), except that if the decrement cannot be immedi-
+       ately performed, then call returns an error (errno set to EAGAIN) instead of blocking.
+
+       sem_timedwait() is the same as sem_wait(), except that abs_timeout specifies a limit  on
+       the  amount  of  time  that the call should block if the decrement cannot be immediately
+       performed.  The abs_timeout argument points to a structure that  specifies  an  absolute
+       timeout  in  seconds  and  nanoseconds since the Epoch (00:00:00, 1 January 1970).  This
+       structure is defined as follows:
+
+         struct timespec {
+             time_t tv_sec;      /* Seconds */
+             long   tv_nsec;     /* Nanoseconds [0 .. 999999999] */
+         };
+
+

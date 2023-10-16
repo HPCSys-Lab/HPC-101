@@ -1,0 +1,77 @@
+
+ Toda sincronização com threads é feita com a estrutura _pthread_fastlock:
+
+ pthread_cond_t 
+ pthread_mutex_t
+ pthread_barrier_t
+ pthread_rwlock_t
+ sem_t
+
+
+// ---------------------------------------------------------------------------
+// /usr/include/bits/pthreadtypes.h
+
+/* Fast locks (not abstract because mutexes and conditions aren't abstract). */
+struct _pthread_fastlock
+{
+  long int __status;   /* "Free" or "taken" or head of waiting list */
+  int __spinlock;      /* Used by compare_and_swap emulation. Also,
+			  adaptive SMP lock stores spin count here. */
+};
+
+typedef struct
+{
+  struct _pthread_fastlock __c_lock; /* Protect against concurrent access */
+  _pthread_descr __c_waiting;        /* Threads waiting on this condition */
+  char __padding[48 - sizeof (struct _pthread_fastlock)
+		 - sizeof (_pthread_descr) - sizeof (__pthread_cond_align_t)];
+  __pthread_cond_align_t __align;
+} pthread_cond_t;
+
+/* Mutexes (not abstract because of PTHREAD_MUTEX_INITIALIZER).  */
+/* (The layout is unnatural to maintain binary compatibility
+    with earlier releases of LinuxThreads.) */
+typedef struct
+{
+  int __m_reserved;               /* Reserved for future use */
+  int __m_count;                  /* Depth of recursive locking */
+  _pthread_descr __m_owner;       /* Owner thread (if recursive or errcheck) */
+  int __m_kind;                   /* Mutex kind: fast, recursive or errcheck */
+  struct _pthread_fastlock __m_lock; /* Underlying fast lock */
+} pthread_mutex_t;
+
+#if defined __USE_UNIX98 || defined __USE_XOPEN2K
+/* Read-write locks.  */
+typedef struct _pthread_rwlock_t
+{
+  struct _pthread_fastlock __rw_lock; /* Lock to guarantee mutual exclusion */
+  int __rw_readers;                   /* Number of readers */
+  _pthread_descr __rw_writer;         /* Identity of writer, or NULL if none */
+  _pthread_descr __rw_read_waiting;   /* Threads waiting for reading */
+  _pthread_descr __rw_write_waiting;  /* Threads waiting for writing */
+  int __rw_kind;                      /* Reader/Writer preference selection */
+  int __rw_pshared;                   /* Shared between processes or not */
+} pthread_rwlock_t;
+
+#ifdef __USE_XOPEN2K
+/* POSIX spinlock data type.  */
+typedef volatile int pthread_spinlock_t;
+
+/* POSIX barrier. */
+typedef struct {
+  struct _pthread_fastlock __ba_lock; /* Lock to guarantee mutual exclusion */
+  int __ba_required;                  /* Threads needed for completion */
+  int __ba_present;                   /* Threads waiting */
+  _pthread_descr __ba_waiting;        /* Queue of waiting threads */
+} pthread_barrier_t;
+
+// ---------------------------------------------------------------------------
+// /usr/include/semaphore.h
+
+/* System specific semaphore definition.  */
+typedef struct
+{
+  struct _pthread_fastlock __sem_lock;
+  int __sem_value;
+  _pthread_descr __sem_waiting;
+} sem_t;
