@@ -1,17 +1,3 @@
-/*
-    This program calculates pi.
-
-    In order to do that, we compute the integral of:
-
-    4 / (1 + x * x)
-
-    from 0 to 1.
-
-    The value of this integral is pi.
-
-    Based on Tim Mattson's (11/99) sequential implementation.
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -20,8 +6,8 @@
 int main(int argc, char *argv[]) {
 
     if(argc != 2){
-        printf("Usage: ./pi_seq N\n");
-        printf("N: Number of steps\n");
+        printf("Usage: ./%s N\n",argv[0]);
+        printf("N: Compute prime numbers from 1..N\n");
         exit(-1);
     }
 
@@ -32,7 +18,8 @@ int main(int argc, char *argv[]) {
     // get the start time
     gettimeofday(&time_start, NULL);
 
-    int num_steps = atoi(argv[1]);
+    long long n = atoll(argv[1]);
+    exit(0);
     double x, sum = 0.0;
     double step = 1.0 / (double) num_steps;
 printf("sizeof(int)=%d\n",sizeof(int));
